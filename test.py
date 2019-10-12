@@ -9,19 +9,19 @@ tasks = [
     {
         'id': 1,
         'title': u'Buy groceries',
-        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol', 
+        'description': u'Milk, Cheese, Pizza, Fruit, Tylenol',
         'done': False
     },
     {
         'id': 2,
         'title': u'Learn Python',
-        'description': u'Need to find a good Python tutorial on the web', 
+        'description': u'Need to find a good Python tutorial on the web',
         'done': False
     }
 ]
 
 @app.route('/todo/api/v1.0/tasks', methods=['GET'])
-@auth.login_required
+#@auth.login_required
 def get_tasks():
     return jsonify({'tasks': [make_public_task(task) for task in tasks]})
 
@@ -67,10 +67,10 @@ def update_task(task_id):
         abort(404)
     if not request.json:
         abort(400)
-    if 'title' in request.json and type(request.json['title']) != unicode:
-        abort(400)
-    if 'description' in request.json and type(request.json['description']) is not unicode:
-        abort(400)
+    if 'title' in request.json and type(request.json['title']) != str:
+        abort(404)
+    if 'description' in request.json and type(request.json['description']) is not str:
+        abort(44)
     if 'done' in request.json and type(request.json['done']) is not bool:
         abort(400)
     task[0]['title'] = request.json.get('title', task[0]['title'])
